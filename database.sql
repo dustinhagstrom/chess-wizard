@@ -47,6 +47,7 @@ CREATE TABLE "user_stats" (
 CREATE TABLE "user_follower" (
     "leader_id" INTEGER,
     "follower_id" INTEGER,
+    "is_following" BOOL DEFAULT TRUE,
     PRIMARY KEY("leader_id", "follower_id"),
     FOREIGN KEY ("leader_id") REFERENCES "user" ("id"),
     FOREIGN KEY ("follower_id") REFERENCES "user" ("id")
@@ -67,19 +68,6 @@ INSERT INTO "user"
 		'1234',
 		'dustn.png'
 		);
-		
-INSERT INTO "user_stats"
-	( "user_id",
-	"games_won",
-    "games_lost",
-    "games_tied"
-    )
-    VALUES (
-    	1,
-    	2,
-    	1,
-    	0
-    	);
 
 INSERT INTO "user"
 	( "email",
@@ -92,8 +80,53 @@ INSERT INTO "user"
 		'jdawg',
 		'1234',
 		'jdawg.png'
-		);
+		);		
 		
+INSERT INTO "user_stats"
+	( "user_id",
+	"games_won",
+    "games_lost",
+    "games_tied"
+    )
+    VALUES (
+    	1,
+    	1,
+    	0,
+    	0
+    	);
+			
+INSERT INTO "user_stats"
+	( "user_id",
+	"games_won",
+    "games_lost",
+    "games_tied"
+    )
+    VALUES (
+    	2,
+    	0,
+    	1,
+    	0
+    	);
+    	
+INSERT INTO "user_follower"
+	( "leader_id",
+    "follower_id"
+    )
+    VALUES (
+    	1,
+    	2
+    	);
+
+    	
+INSERT INTO "user_follower"
+	( "leader_id",
+    "follower_id"
+    )
+    VALUES (
+    	2,
+    	1
+    	);
+    	
 INSERT INTO "game"
 	( "user_id_white",
 	"user_id_black",
