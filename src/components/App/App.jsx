@@ -54,7 +54,7 @@ function App() {
             Even though it seems like they are different pages, the user is always on localhost:5173/user */}
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
-            exact
+            // exact
             path="/user"
           >
             <UserPage />

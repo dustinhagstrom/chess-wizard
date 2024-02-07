@@ -2,8 +2,7 @@ import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import UserInfoComponent from '../UserInfoComponent/UserInfoComponent';
 import {useSelector} from 'react-redux';
-import CenterPageComponent from '../CenterPageComponent/CenterPageComponent';
-import RightPageComponent from '../RightPageComponent/RightPageComponent';
+import MainContent from '../MainContent/MainContent';
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -15,8 +14,7 @@ function UserPage() {
       <LogOutButton className="btn" /> */}
 
       <UserInfoComponent />
-      <CenterPageComponent />
-      <RightPageComponent />
+      <MainContent />
     </div>
   );
 }
