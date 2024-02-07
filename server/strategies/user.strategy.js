@@ -4,6 +4,7 @@ const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 
 passport.serializeUser((user, done) => {
+  console.log("user from user.strategy.js:", user);
   done(null, user.id);
 });
 
@@ -17,6 +18,9 @@ passport.deserializeUser((id, done) => {
       if (user) {
         // user found
         delete user.password; // remove password so it doesn't get sent
+        delete user.email; // remove email so it doesn't get sent
+        delete user.avatar_obj_key; // remove avatar_obj_key so it doesn't get sent
+        delete user.is_active; // remove is_active so it doesn't get sent
         // done takes an error (null in this case) and a user
         done(null, user);
       } else {
