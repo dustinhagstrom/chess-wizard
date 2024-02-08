@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 function ChessPiece(props) {
   // Using hooks we're creating local state for a "heading" variable with
   // a default value of 'Functional Component'
-  const store = useSelector((store) => store);
+  // const store = useSelector((store) => store);
   const [heading, setHeading] = useState('ChessPiece Component');
 
   return (

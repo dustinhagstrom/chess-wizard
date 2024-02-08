@@ -17,7 +17,7 @@ CREATE TABLE "user" (
     "email" VARCHAR(200) UNIQUE NOT NULL,
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
-    "avatar_obj_key" VARCHAR(250) NOT NULL,
+    "avatar_obj_key" VARCHAR(250) DEFAULT 'newUser.png',
     "is_active" BOOLEAN NOT NULL DEFAULT TRUE
 );
 
@@ -38,9 +38,9 @@ CREATE TABLE "game" (
 
 CREATE TABLE "user_stats" (
     "user_id" INTEGER PRIMARY KEY,
-    "games_won" INTEGER DEFAULT 0,
-    "games_lost" INTEGER DEFAULT 0,
-    "games_tied" INTEGER DEFAULT 0,
+    "won" INTEGER DEFAULT 0,
+    "lost" INTEGER DEFAULT 0,
+    "tied" INTEGER DEFAULT 0,
     FOREIGN KEY ("user_id") REFERENCES "user" ("id")
 );
 
@@ -84,9 +84,9 @@ INSERT INTO "user"
 		
 INSERT INTO "user_stats"
 	( "user_id",
-	"games_won",
-    "games_lost",
-    "games_tied"
+	"won",
+    "lost",
+    "tied"
     )
     VALUES (
     	1,
@@ -97,9 +97,9 @@ INSERT INTO "user_stats"
 			
 INSERT INTO "user_stats"
 	( "user_id",
-	"games_won",
-    "games_lost",
-    "games_tied"
+	"won",
+    "lost",
+    "tied"
     )
     VALUES (
     	2,
@@ -158,9 +158,17 @@ INSERT INTO "game"
 		);
 		
 ----------------------------------------------- END INSERT STATEMENTS -----------------------------------------------
+
+------------------------------------------------ BEGIN SELECT STATEMENTS -----------------------------------------------
+SELECT "U"."username", "US"."won", "US"."lost", "US"."tied"
+	FROM "user" AS "U" JOIN "user_stats" AS "US" ON "U"."id" = "US"."user_id"
+	GROUP BY "US"."won" LIMIT 10;
+------------------------------------------------- END SELECT STATEMENTS ------------------------------------------------
+
 ------------------------------------------------ BEGIN PUT STATEMENTS -----------------------------------------------
 
 ------------------------------------------------- END PUT STATEMENTS ------------------------------------------------
+
 ----------------------------------------------- BEGIN DELETE STATEMENTS ---------------------------------------------
 
 ------------------------------------------------ END DELETE STATEMENTS ----------------------------------------------

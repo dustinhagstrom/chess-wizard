@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 function GameOverMessage(props) {
   // Using hooks we're creating local state for a "heading" variable with
   // a default value of 'Functional Component'
-  const store = useSelector((store) => store);
+  // const store = useSelector((store) => store);
   const [heading, setHeading] = useState('GameOverMessage Component');
 
   return (

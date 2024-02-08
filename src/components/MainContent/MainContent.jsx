@@ -16,14 +16,14 @@ import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
 function MainContent(props) {
     // Using hooks we're creating local state for a "heading" variable with
     // a default value of 'Functional Component'
-    const store = useSelector((store) => store);
+    // const store = useSelector((store) => store);
     const [heading, setHeading] = useState("MainContent Component");
 
     // the match object helps with nested routes
     const match = useRouteMatch();
-    console.log("match object:", match);
+    // console.log("match object:", match);
 
-    console.log("props of MainContent:", props);
+    // console.log("props of MainContent:", props);
 
     return (
 

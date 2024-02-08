@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-// Basic functional component structure for React with default state
-// value setup. When making a new component be sure to replace the
-// component name TemplateFunction with the name for the new component.
+// This component will make a dispatch to the database to get the top ten players
+// in the system, it will then display:
+// RANK # | username | wins | losses | stalemates
 function LeaderBoard(props) {
-  // Using hooks we're creating local state for a "heading" variable with
-  // a default value of 'Functional Component'
-  const store = useSelector((store) => store);
-  const [heading, setHeading] = useState('LeaderBoard Component');
+    //! Local state
+    const [heading, setHeading] = useState("LeaderBoard Component");
+    //! global state
+    const leaderBoard = useSelector((store) => store.leaderBoard);
+    const dispatch = useDispatch();
 
-  return (
-    <div>
-      <h2>{heading}</h2>
-    </div>
-  );
+    console.log("leaderBoard:", leaderBoard);
+
+    useEffect(() => {
+        dispatch({
+            type: "FETCH_USER_LEADERBOARD",
+        });
+    }, [dispatch]);
+
+    return (
+        <div>
+            <h2>{heading}</h2>
+        </div>
+    );
 }
 
 export default LeaderBoard;

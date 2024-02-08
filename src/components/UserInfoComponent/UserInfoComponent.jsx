@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 // this component can also become the component that fills the right side
 // of the screen when it holds the values of the opponent player.
 function UserInfoComponent(props) {
-  const store = useSelector((store) => store);
+  // const store = useSelector((store) => store);
   const [heading, setHeading] = useState('UserInfoComponent Component');
 
   return (
