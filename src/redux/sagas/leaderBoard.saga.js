@@ -11,7 +11,7 @@ function* fetchLeaderBoard() {
 
     const response = yield axios.get('/api/leaderBoard', config);
 
-    console.log("leaderboard data from db:", response.data);
+    // console.log("leaderboard data from db:", response.data);
     yield put({ type: 'SET_LEADERBOARD', payload: response.data });
   } catch (error) {
     console.log('Leader Board get request failed');

@@ -11,7 +11,7 @@ function LeaderBoard(props) {
     const leaderBoard = useSelector((store) => store.leaderBoard);
     const dispatch = useDispatch();
 
-    console.log("leaderBoard:", leaderBoard);
+    // console.log("leaderBoard:", leaderBoard);
 
     useEffect(() => {
         dispatch({

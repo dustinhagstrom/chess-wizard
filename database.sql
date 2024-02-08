@@ -23,7 +23,7 @@ CREATE TABLE "user" (
 
 -- MAKE ENUM FOR THE 'winner' column of "game"
 CREATE TYPE "game_result" AS ENUM
-	('null', 'white', 'black', 'stalemate'); 
+	('white', 'black', 'stalemate'); 
 
 CREATE TABLE "game" (
     "id" SERIAL PRIMARY KEY,

@@ -14,7 +14,7 @@ function UserInfoComponent(props) {
 
   const match = useRouteMatch();
 
-   console.log("match object:", match);
+  //  console.log("match object:", match);
 
     // console.log("props of MainContent:", props);
 

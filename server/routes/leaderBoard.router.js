@@ -17,11 +17,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
   pool.query(queryText)
   .then((dbRes) => {
-    console.log("data from db:", dbRes.rows);
+    console.log("[inside leaderBoard.router.js] LB data from db:", dbRes.rows);
     res.status(200).send(dbRes.rows);
   })
   .catch((error) => {
-    console.log("error getting the leaderboard data.");
+    console.log("[inside leaderBoard.router.js] error getting the leaderboard data from DB.");
     console.error(error);
   })
 
