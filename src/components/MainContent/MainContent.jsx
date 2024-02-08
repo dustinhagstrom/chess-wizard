@@ -26,7 +26,6 @@ function MainContent(props) {
     // console.log("props of MainContent:", props);
 
     return (
-
         // LOOK INTO THE NAVIGATE COMPONENT FROM REACT ROUTER
         <div>
             <h2>{heading}</h2>
@@ -43,7 +42,7 @@ function MainContent(props) {
                 <GameOverMessage />
                 <UserInfoComponent />
             </ProtectedRoute>
-            <ProtectedRoute path={match.url + "/"} >
+            <ProtectedRoute path={match.url + "/"}>
                 <PersonalizedWelcomeMessage />
                 <LeaderBoard />
             </ProtectedRoute>

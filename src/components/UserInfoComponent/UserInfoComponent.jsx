@@ -22,7 +22,6 @@ function UserInfoComponent(props) {
     <div>
       <h2>{heading}</h2>
 
-      <Route></Route>
     </div>
   );
 }
