@@ -10,6 +10,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
+        {/* this routes to "/user" if logged in, "/home" otherwise */}
         <h2 className="nav-title">Prime Solo Project</h2>
       </Link>
       <div>
@@ -25,10 +26,16 @@ function Nav() {
         {user.id && (
           <>
             <Link className="navLink" to="/user">
-              Home
+            ⌂
             </Link>
 
+            <Link className="navLink" to="/user">♛</Link>
+            <Link className="navLink" to="/user">👥</Link>
+            <Link className="navLink" to="/user/settings">⚙</Link>
+
             <Link className="navLink" to="/info">
+              {/* make this an information icon */}
+              {/* this will hold the technology information, etc. */}
               Info Page
             </Link>
 
@@ -37,6 +44,7 @@ function Nav() {
         )}
 
         <Link className="navLink" to="/about">
+          {/* this is the 'about this app' page */}
           About
         </Link>
       </div>

@@ -31,10 +31,6 @@ function MainContent(props) {
         <div>
             <h2>{heading}</h2>
             {/* Route Scheme UserPage/CenterPageComponent-any/RightComponent */}
-            <ProtectedRoute exact path={match.url + "/"} >
-                <PersonalizedWelcomeMessage />
-                <LeaderBoard />
-            </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/newGame"}>
                 <NewGameComponent />
                 <FriendsList />
@@ -46,6 +42,10 @@ function MainContent(props) {
             <ProtectedRoute exact path={match.url + "/gameOver"}>
                 <GameOverMessage />
                 <UserInfoComponent />
+            </ProtectedRoute>
+            <ProtectedRoute path={match.url + "/"} >
+                <PersonalizedWelcomeMessage />
+                <LeaderBoard />
             </ProtectedRoute>
         </div>
     );
