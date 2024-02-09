@@ -1,7 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// worker Saga: will be fired on "LOGIN" actions
 function* loginUser(action) {
   try {
     // clear any existing error on the login page
@@ -12,12 +11,8 @@ function* loginUser(action) {
       withCredentials: true,
     };
 
-    // send the action.payload as the body
-    // the config includes credentials which
-    // allow the server session to recognize the user
     yield axios.post('/api/user/login', action.payload, config);
 
-    // after the user has logged in
     // get the user information from the server
     yield put({ type: 'FETCH_USER' });
   } catch (error) {
@@ -35,7 +30,6 @@ function* loginUser(action) {
   }
 }
 
-// worker Saga: will be fired on "LOGOUT" actions
 function* logoutUser(action) {
   try {
     const config = {
@@ -43,14 +37,8 @@ function* logoutUser(action) {
       withCredentials: true,
     };
 
-    // the config includes credentials which
-    // allow the server session to recognize the user
-    // when the server recognizes the user session
-    // it will end the session
     yield axios.post('/api/user/logout', config);
 
-    // now that the session has ended on the server
-    // remove state from reducers
     yield put({ type: 'UNSET_USER' });
     yield put({ type: 'UNSET_OPPONENT_PLAYER' });
     yield put({ type: 'UNSET_THIS_PLAYER' });

@@ -11,14 +11,11 @@ import { Route } from 'react-router-dom';
 function UserInfoComponent({ userId }) {
   const [heading, setHeading] = useState('UserInfoComponent Component');
   const user = useSelector((store) => store.user);
-  // const dispatchType = user.id === userId ? 'FETCH_THIS_PLAYER_STATS' : 'FETCH_OPPONENT_PLAYER_STATS';
-
-  console.log("[inside UserInfoComponent]")
-  // 'SET_THIS_PLAYER' : 'SET_OPPONENT_PLAYER'
+  // console.log("[inside UserInfoComponent]")
 
   const dispatch = useDispatch();
-  console.log("[inside UserInfoComponent] passed in userId:", userId);
-  console.log("[inside UserInfoComponent] user.id from user reducer:", user.id);
+  // console.log("[inside UserInfoComponent] passed in userId:", userId);
+  // console.log("[inside UserInfoComponent] user.id from user reducer:", user.id);
 
   useEffect(() => {
     

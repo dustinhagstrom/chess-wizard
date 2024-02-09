@@ -10,27 +10,21 @@ import FriendsList from "../FriendsList/FriendsList";
 import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
 import { Redirect } from "react-router-dom";
 
-// Basic functional component structure for React with default state
-// value setup. When making a new component be sure to replace the
-// component name TemplateFunction with the name for the new component.
 function MainContent(props) {
-    // Using hooks we're creating local state for a "heading" variable with
-    // a default value of 'Functional Component'
     const user = useSelector((store) => store.user);
+
     // const opponent = useSelector((store) => store.opponent);
     const game = useSelector((store) => store.game);
     const [heading, setHeading] = useState("MainContent Component");
 
-    // the match object helps with nested routes
     const match = useRouteMatch();
-    // console.log("match object:", match);
 
+    // console.log("match object:", match);
     // console.log("props of MainContent:", props);
 
     return (
         <div>
             <h2>{heading}</h2>
-            {/* Route Scheme UserPage/CenterPageComponent-any/RightComponent */}
             <ProtectedRoute exact path={match.url + "/newGame"}>
                 <NewGameComponent />
             </ProtectedRoute>
