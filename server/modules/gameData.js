@@ -1,7 +1,7 @@
 // this will hold games that are waiting to begin
-// will match games in this array to the random session_code
+// will match games in this array to the random sessionCode
 // there is a lottery chance that there will be more than one
-// game in here at a time with the same session_code.
+// game in here at a time with the same sessionCode.
 const gameStagingArea = [];
 
 // this will hold all of the games that are currently running
@@ -24,18 +24,18 @@ const generateNewGame = (playerOneID) => {
     const gameCode = generateRandomGameID();
 
     return {
-        session_code: gameCode, user_id_white: playerOneID    
+        sessionCode: gameCode, userIdWhite: playerOneID    
     };
 
 };
 
 const findGameSessionToJoin = (joinCode, joiningPlayerID) => {
   // return the first game in the filtered array, filter out games that don't match
-  // session_code
-  const foundGame = gameStagingArea.filter((game) => game.session_code == joinCode)[0];
+  // sessionCode
+  const foundGame = gameStagingArea.filter((game) => game.sessionCode == joinCode)[0];
 
   // add the joining player to this game
-  foundGame.user_id_black = joiningPlayerID;
+  foundGame.userIdBlack = joiningPlayerID;
 
   // add the found game to the gamesInProgress
   gamesInProgress.push(foundGame);
@@ -44,11 +44,9 @@ const findGameSessionToJoin = (joinCode, joiningPlayerID) => {
   let deletionIndex = gameStagingArea.indexOf(foundGame);
   gameStagingArea.splice(deletionIndex, 1);
   
-  console.log("[inside gameData.js] found game:", foundGame);
-  console.log("[inside gameData.js] gameStagingArea:", gameStagingArea);
-  console.log("[inside gameData.js] gamesInProgress:", gamesInProgress);
-
-
+  // console.log("[inside gameData.js] found game:", foundGame);
+  // console.log("[inside gameData.js] gameStagingArea:", gameStagingArea);
+  // console.log("[inside gameData.js] gamesInProgress:", gamesInProgress);
 
   return foundGame;
 }

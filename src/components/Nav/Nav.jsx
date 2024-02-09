@@ -8,8 +8,8 @@ function Nav() {
     const user = useSelector((store) => store.user);
     const game = useSelector((store) => store.game);
 
-    const gameInProgress = game?.id ? true : false;
-    // console.log(gameInProgress);
+    const gameInProgress = game?.sessionCode ? true : false;
+    console.log(gameInProgress);
 
     return (
         <div className="nav">

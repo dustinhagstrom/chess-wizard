@@ -13,48 +13,29 @@ const {
 
 /**
  * This get will actually start the process of making a game instance
- * it returns a session_code to the creator of the game
+ * it returns a sessionCode to the creator of the game
  */
 router.get("/", rejectUnauthenticated, (req, res) => {
     // console.log("[inside game.router.js] User generating new game:", req.user.id);
 
     //! make a new game and add it to the gameStagingArea
-    //!     it will wait there for the other player to join
-    //!     then it will be spliced from gameStagingArea into
-    //!     gamesInProgress
+    //! it will wait there for the other player to join
+    //! then it will be spliced from gameStagingArea into
+    //! gamesInProgress
     const newGame = generateNewGame(req.user.id);
     gameStagingArea.push(newGame);
 
-    // console.log("[inside game.router.js] new game session code:", newGame.session_code);
-    console.log(
-        "[inside game.router.js] game staging area contents:",
-        gameStagingArea
-    );
+    // console.log("[inside game.router.js] new game session code:", newGame.sessionCode);
+    // console.log(
+    //     "[inside game.router.js] game staging area contents:",
+    //     gameStagingArea
+    // );
 
-    //! this session_code will be used as a pusher channel name
+    //! this game.sessionCode will be used as a pusher channel name
     //! the client will subscribe to the channel with this
-    //! session_code.
+    //! sessionCode.
 
-    res.send(newGame.session_code);
-    // const queryText = `INSERT INTO "game"
-    // ( "user_id_white",
-    // "user_id_black",
-    // "session_code"
-    // )
-    // VALUES (
-    // 	$1,
-    // 	$2,
-    //   $3
-    // 	);`
-    // pool.query(queryText, [newGame.user_id_white, newGame.user_id_black, newGame.session_code])
-    // .then((dbRes) => {
-    //   console.log("[inside game.router.js] new game data from db:", dbRes.rows);
-    //   res.status(200).send(dbRes.rows);
-    // })
-    // .catch( (error) => {
-    //   console.log("[inside game.router.js] error creating the new game in database.");
-    //   console.error(error);
-    // })
+    res.send(newGame);
 });
 
 /**
@@ -64,12 +45,14 @@ router.get("/", rejectUnauthenticated, (req, res) => {
  * from gameStagingArea to gamesInProgress
  */
 router.post("/", rejectUnauthenticated, (req, res) => {
-    //! this session_code will be used as a pusher channel name
+    //! this sessionCode will be used as a pusher channel name
     //! the client will subscribe to the channel with this
-    //! session_code.
+    //! sessionCode.
 
-    console.log("[inside game.router.js] User join staged game:", req.user.id);
-    const foundGame = findGameSessionToJoin(req.body.session_code, req.user.id);
+       console.log("[inside game.router.js] join game req object:", req.body);
+
+    // console.log("[inside game.router.js] User join staged game:", req.user.id);
+    const foundGame = findGameSessionToJoin(req.body.sessionCode, req.user.id);
     const queryText = `INSERT INTO "game"
                           ( "user_id_white",
                           "user_id_black",
@@ -81,14 +64,14 @@ router.post("/", rejectUnauthenticated, (req, res) => {
                             $3
                             );`;
     pool.query(queryText, [
-        foundGame.user_id_white,
-        foundGame.user_id_black,
-        foundGame.session_code,
+        foundGame.userIdWhite,
+        foundGame.userIdBlack,
+        foundGame.sessionCode,
     ])
         .then((dbRes) => {
-            console.log(
-                "[inside game.router.js] successfully created new game in db:"
-            );
+            // console.log(
+            //     "[inside game.router.js] successfully created new game in db:"
+            // );
             res.status(201).send(foundGame);
         })
         .catch((error) => {
@@ -97,7 +80,6 @@ router.post("/", rejectUnauthenticated, (req, res) => {
             );
             console.error(error);
         });
-    console.log("[inside game.router.js] gamesInProgress:", gamesInProgress);
 });
 
 module.exports = router;

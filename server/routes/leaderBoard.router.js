@@ -17,7 +17,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
   pool.query(queryText)
   .then((dbRes) => {
-    console.log("[inside leaderBoard.router.js] LB data from db:", dbRes.rows);
+    // console.log("[inside leaderBoard.router.js] LB data from db:", dbRes.rows);
     res.status(200).send(dbRes.rows);
   })
   .catch((error) => {
