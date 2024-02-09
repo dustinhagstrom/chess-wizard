@@ -1,13 +1,15 @@
 
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		2,
 		'white',
@@ -32,13 +34,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		2,
 		2,
         1,
 		'white',
@@ -63,13 +67,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		3,
 		'white',
@@ -94,13 +100,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		3,
 		3,
         1,
 		'white',
@@ -125,13 +133,15 @@ INSERT INTO "game"
       
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		4,
 		'white',
@@ -156,13 +166,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		4,
 		4,
         1,
 		'white',
@@ -187,13 +199,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		5,
 		'white',
@@ -218,13 +232,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		5,
 		5,
         1,
 		'white',
@@ -249,13 +265,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		6,
 		'white',
@@ -280,13 +298,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		6,
 		6,
         1,
 		'white',
@@ -312,13 +332,15 @@ INSERT INTO "game"
 
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		7,
 		'white',
@@ -343,13 +365,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		7,
 		7,
         1,
 		'white',
@@ -374,13 +398,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		8,
 		'white',
@@ -405,13 +431,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		8,
 		8,
         1,
 		'white',
@@ -436,13 +464,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		9,
 		'white',
@@ -467,13 +497,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		9,
 		9,
         1,
 		'white',
@@ -498,13 +530,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		10,
 		'white',
@@ -529,13 +563,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		10,
 		10,
         1,
 		'white',
@@ -560,13 +596,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		1,
 		1,
 		11,
 		'white',
@@ -591,13 +629,15 @@ INSERT INTO "game"
         
 -- GAME separator
 INSERT INTO "game"
-	( "user_id_white",
+	( "host_id",
+	"user_id_white",
 	"user_id_black",
 	"winner",
 	"moves",
 	"session_code"
 	)
 	VALUES (
+		11,
 		11,
         1,
 		'white',

@@ -9,8 +9,8 @@ function Nav() {
     const game = useSelector((store) => store.game);
 
     const gameInProgress = game?.sessionCode ? true : false;
-    console.log("[inside Nav] gameInProgress:", gameInProgress);
-    console.log("[inside Nav] game from reducer:", game);
+    // console.log("[inside Nav] gameInProgress:", gameInProgress);
+    // console.log("[inside Nav] game from reducer:", game);
 
     return (
         <div className="nav">

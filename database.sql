@@ -27,6 +27,7 @@ CREATE TYPE "game_result" AS ENUM
 
 CREATE TABLE "game" (
     "id" SERIAL PRIMARY KEY,
+    "host_id" INTEGER NOT NULL,
     "user_id_white" INTEGER NOT NULL,
     "user_id_black" INTEGER NOT NULL,
     "winner" game_result,

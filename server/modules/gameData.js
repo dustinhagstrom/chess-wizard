@@ -20,22 +20,22 @@ const generateRandomGameID = () => {
     return joinedArray;
   };
 
-const generateNewGame = (playerOneID) => {
+const generateNewGame = (hostId) => {
     const gameCode = generateRandomGameID();
 
     return {
-        sessionCode: gameCode, userIdWhite: playerOneID    
+        sessionCode: gameCode, userIdWhite: hostId, hostId: hostId    
     };
 
 };
 
-const findGameSessionToJoin = (joinCode, joiningPlayerID) => {
+const findGameSessionToJoin = (joinCode, joiningPlayerId) => {
   // return the first game in the filtered array, filter out games that don't match
   // sessionCode
   const foundGame = gameStagingArea.filter((game) => game.sessionCode == joinCode)[0];
 
   // add the joining player to this game
-  foundGame.userIdBlack = joiningPlayerID;
+  foundGame.userIdBlack = joiningPlayerId;
 
   // add the found game to the gamesInProgress
   gamesInProgress.push(foundGame);

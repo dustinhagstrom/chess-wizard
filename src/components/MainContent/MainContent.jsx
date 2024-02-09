@@ -8,6 +8,7 @@ import LeaderBoard from "../LeaderBoard/LeaderBoard";
 import { useRouteMatch } from "react-router-dom";
 import FriendsList from "../FriendsList/FriendsList";
 import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
+import { Redirect } from "react-router-dom";
 
 // Basic functional component structure for React with default state
 // value setup. When making a new component be sure to replace the
@@ -15,7 +16,9 @@ import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
 function MainContent(props) {
     // Using hooks we're creating local state for a "heading" variable with
     // a default value of 'Functional Component'
-    const opponent = useSelector((store) => store.opponent);
+    const user = useSelector((store) => store.user);
+    // const opponent = useSelector((store) => store.opponent);
+    const game = useSelector((store) => store.game);
     const [heading, setHeading] = useState("MainContent Component");
 
     // the match object helps with nested routes
@@ -32,9 +35,12 @@ function MainContent(props) {
                 <NewGameComponent />
             </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/chessBoard"}>
-                <ChessBoard />
+                {/* if there isn't a game.sessionCode then redirect to '/newGame'*/}
+                {game.sessionCode ? <ChessBoard /> : <Redirect to={match.url + "/newGame"} />}
+                
                 {/* show message when waiting for opponent otherwise show opponent stats */}
-               {opponent.id ? <UserInfoComponent userProp={opponent}/> : <PersonalizedWelcomeMessage />} 
+               <UserInfoComponent userId={game.userIdBlack == user.id ? game.userIdWhite : game.userIdBlack}/>
+               <PersonalizedWelcomeMessage />
             </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/friends"}>
                 <FriendsList />

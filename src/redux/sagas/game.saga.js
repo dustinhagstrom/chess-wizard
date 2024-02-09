@@ -51,7 +51,7 @@ function* abortGame(action) {
         yield axios.delete(`/api/game/${action.payload}`, config);
 
         // Remove the game data from the reducer
-        yield put({ type: "RESET_GAME" });
+        yield put({ type: "UNSET_GAME" });
 
     } catch (error) {
         console.log("game host request failed");

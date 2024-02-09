@@ -54,17 +54,21 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     // console.log("[inside game.router.js] User join staged game:", req.user.id);
     const foundGame = findGameSessionToJoin(req.body.sessionCode, req.user.id);
     const queryText = `INSERT INTO "game"
-                          ( "user_id_white",
+                          ( "host_id",
+                          "user_id_white",
                           "user_id_black",
                           "session_code"
                           )
                           VALUES (
                             $1,
                             $2,
-                            $3
+                            $3,
+                            $4
                             ) RETURNING "id" AS "gameId", "user_id_black" AS "userIdBlack",
-                                "user_id_white" AS "userIdWhite", "session_code" AS "sessionCode";`;
+                                "user_id_white" AS "userIdWhite", "session_code" AS "sessionCode",
+                                "host_id" AS "hostId";`;
     pool.query(queryText, [
+        foundGame.hostId,
         foundGame.userIdWhite,
         foundGame.userIdBlack,
         foundGame.sessionCode,

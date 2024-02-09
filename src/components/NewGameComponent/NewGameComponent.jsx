@@ -6,6 +6,7 @@ import GenericModal from "../GenericModal/GenericModal";
 
 function NewGameComponent(props) {
     // game.sessionCode is the value that this represents in state.
+    // sessionCode holds the state of the code that joining player is inputing
     const [sessionCode, setSessionCode] = useState("");
     const [openModal, setOpenModal] = useState(false);
     const game = useSelector((store) => store.game);
@@ -31,6 +32,7 @@ function NewGameComponent(props) {
     const handlesJoinGame = () => {
         // this will cause another window to open where we can put a game
         setOpenModal(true);
+        
     };
 
     const closeModal = () => {
@@ -47,6 +49,8 @@ function NewGameComponent(props) {
       })
 
       setOpenModal(false)
+
+      history.push("/user/chessBoard");
     }
 
     return (
