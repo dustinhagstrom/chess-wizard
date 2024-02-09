@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import {useSelector} from 'react-redux';
 
-// Basic functional component structure for React with default state
-// value setup. When making a new component be sure to replace the
-// component name TemplateFunction with the name for the new component.
+//! This component will be used to display a personalized welcome to app message
+//! And this component will be rendered when a user hosts a game, but is waiting
+//! on the other player to show up.
 function PersonalizedWelcomeMessage(props) {
-  // Using hooks we're creating local state for a "heading" variable with
-  // a default value of 'Functional Component'
-  // const store = useSelector((store) => store);
   const [heading, setHeading] = useState('PersonalizedWelcomeMessage Component');
 
 

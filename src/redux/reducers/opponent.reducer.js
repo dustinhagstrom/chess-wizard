@@ -1,8 +1,8 @@
-const leaderBoardReducer = (state = [], action) => {
+const opponentReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_LEADERBOARD':
+    case 'SET_OPPONENT_PLAYER':
       return action.payload;
-    case 'UNSET_LEADERBOARD':
+    case 'UNSET_OPPONENT_PLAYER':
       return {};
     default:
       return state;
@@ -11,4 +11,4 @@ const leaderBoardReducer = (state = [], action) => {
 
 // user will be on the redux state at:
 // state.user
-export default leaderBoardReducer;
+export default opponentReducer;

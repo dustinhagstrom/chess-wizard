@@ -15,7 +15,7 @@ import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
 function MainContent(props) {
     // Using hooks we're creating local state for a "heading" variable with
     // a default value of 'Functional Component'
-    // const store = useSelector((store) => store);
+    const opponent = useSelector((store) => store.opponent);
     const [heading, setHeading] = useState("MainContent Component");
 
     // the match object helps with nested routes
@@ -33,7 +33,8 @@ function MainContent(props) {
             </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/chessBoard"}>
                 <ChessBoard />
-                <UserInfoComponent />
+                {/* show message when waiting for opponent otherwise show opponent stats */}
+               {opponent.id ? <UserInfoComponent userProp={opponent}/> : <PersonalizedWelcomeMessage />} 
             </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/friends"}>
                 <FriendsList />

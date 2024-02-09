@@ -50,9 +50,12 @@ function* logoutUser(action) {
     yield axios.post('/api/user/logout', config);
 
     // now that the session has ended on the server
-    // remove the client-side user object to let
-    // the client-side code know the user is logged out
+    // remove state from reducers
     yield put({ type: 'UNSET_USER' });
+    yield put({ type: 'UNSET_OPPONENT_PLAYER' });
+    yield put({ type: 'UNSET_THIS_PLAYER' });
+    yield put({ type: 'UNSET_GAME' });
+    yield put({ type: 'UNSET_LEADERBOARD' });
   } catch (error) {
     console.log('Error with user logout:', error);
   }
