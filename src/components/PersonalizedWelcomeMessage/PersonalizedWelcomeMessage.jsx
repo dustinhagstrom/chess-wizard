@@ -10,6 +10,9 @@ function PersonalizedWelcomeMessage(props) {
   // const store = useSelector((store) => store);
   const [heading, setHeading] = useState('PersonalizedWelcomeMessage Component');
 
+
+  //! it would be cool to integrate this free api into this page
+  //! https://docs.zenquotes.io/zenquotes-documentation/#use-limits
   return (
     <div>
       <h2>{heading}</h2>

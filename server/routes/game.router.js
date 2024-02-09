@@ -62,24 +62,45 @@ router.post("/", rejectUnauthenticated, (req, res) => {
                             $1,
                             $2,
                             $3
-                            );`;
+                            ) RETURNING "id" AS "gameId", "user_id_black" AS "userIdBlack",
+                                "user_id_white" AS "userIdWhite", "session_code" AS "sessionCode";`;
     pool.query(queryText, [
         foundGame.userIdWhite,
         foundGame.userIdBlack,
         foundGame.sessionCode,
     ])
         .then((dbRes) => {
-            // console.log(
-            //     "[inside game.router.js] successfully created new game in db:"
-            // );
-            res.status(201).send(foundGame);
+            res.status(201).send(dbRes.rows[0]);
         })
         .catch((error) => {
             console.log(
                 "[inside game.router.js] error creating the new game in database."
             );
             console.error(error);
+            res.sendStatus(500);
         });
 });
+
+router.put("/", (req, res) => {
+  console.log("[inside game.router.js] add moves to game section");
+})
+
+router.delete("/:id", (req, res) => {
+  console.log("[inside game.router.js] delete game section; req.params.id:", req.params.id);
+  const queryText = `DELETE FROM "game" WHERE "id" = $1;`;
+
+  pool.query(queryText, [req.params.id])
+  .then((dbRes) => {
+    res.sendStatus(204);
+  })
+  .catch((error) => {
+    console.log(
+        "[inside game.router.js] error deleting the new game in database."
+    );
+    console.error(error);
+    res.sendStatus(500);
+});
+  
+})
 
 module.exports = router;

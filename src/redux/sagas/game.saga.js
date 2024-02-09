@@ -39,10 +39,32 @@ function* joinGame(action) {
     }
 }
 
+function* abortGame(action) {
+    console.log("[inside abortGame generator function game.saga.js], action:", action);
+
+    try {
+        const config = {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+        };
+
+        yield axios.delete(`/api/game/${action.payload}`, config);
+
+        // Remove the game data from the reducer
+        yield put({ type: "RESET_GAME" });
+
+    } catch (error) {
+        console.log("game host request failed");
+        console.error(error);
+    }
+}
+
 function* gameSaga() {
     yield takeLatest("HOST_GAME", hostGame);
 
     yield takeLatest("JOIN_GAME_SESSION", joinGame);
+
+    yield takeLatest("ABORT_GAME", abortGame)
 }
 
 export default gameSaga;

@@ -42,7 +42,7 @@ function Nav() {
                                 ♛
                             </Link>
                         )}
-                        <Link className="navLink" to="/user">
+                        <Link className="navLink" to="/user/friends">
                             👥
                         </Link>
 

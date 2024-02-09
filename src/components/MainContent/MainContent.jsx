@@ -5,7 +5,6 @@ import PersonalizedWelcomeMessage from "../PersonalizedWelcomeMessage/Personaliz
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import NewGameComponent from "../NewGameComponent/NewGameComponent";
 import LeaderBoard from "../LeaderBoard/LeaderBoard";
-import GameOverMessage from "../GameOverMessage/GameOverMessage";
 import { useRouteMatch } from "react-router-dom";
 import FriendsList from "../FriendsList/FriendsList";
 import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
@@ -26,25 +25,22 @@ function MainContent(props) {
     // console.log("props of MainContent:", props);
 
     return (
-        // LOOK INTO THE NAVIGATE COMPONENT FROM REACT ROUTER
         <div>
             <h2>{heading}</h2>
             {/* Route Scheme UserPage/CenterPageComponent-any/RightComponent */}
             <ProtectedRoute exact path={match.url + "/newGame"}>
                 <NewGameComponent />
-                <FriendsList />
             </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/chessBoard"}>
                 <ChessBoard />
                 <UserInfoComponent />
             </ProtectedRoute>
-            <ProtectedRoute exact path={match.url + "/gameOver"}>
-                <GameOverMessage />
-                <UserInfoComponent />
-            </ProtectedRoute>
-            <ProtectedRoute path={match.url + "/"}>
-                <PersonalizedWelcomeMessage />
+            <ProtectedRoute exact path={match.url + "/friends"}>
+                <FriendsList />
                 <LeaderBoard />
+            </ProtectedRoute>
+            <ProtectedRoute exact path={match.url + "/"}>
+                <PersonalizedWelcomeMessage />
             </ProtectedRoute>
         </div>
     );
