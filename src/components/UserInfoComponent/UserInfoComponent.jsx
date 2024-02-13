@@ -18,12 +18,12 @@ function UserInfoComponent({ userId }) {
   // console.log("[inside UserInfoComponent] user.id from user reducer:", user.id);
 
   useEffect(() => {
-    
+    console.log("[inside useEffect UserInfoComponent] passed in user id:", userId, "this user's id:", user.id);
     dispatch({
       type: 'FETCH_PLAYER_STATS',
       payload: { id: userId , isOpponent: user.id !== userId}
     })
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>

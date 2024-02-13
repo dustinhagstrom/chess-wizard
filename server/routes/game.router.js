@@ -9,6 +9,8 @@ const {
     gamesInProgress,
     generateNewGame,
     findGameSessionToJoin,
+    getGameHistory,
+    makeAMove,
 } = require("../modules/gameData");
 
 /**
@@ -35,7 +37,19 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     //! the client will subscribe to the channel with this
     //! sessionCode.
 
-    res.send(newGame);
+    res.send({
+        sessionCode: newGame.sessionCode,
+        userIdWhite: newGame.userIdWhite,
+        hostId: newGame.hostId,
+        fen: newGame.fen,
+    });
+    // res.send({
+    //     sessionCode: newGame.sessionCode,
+    //     userIdWhite: newGame.userIdWhite,
+    //     hostId: newGame.hostId,
+    //     chess: newGame.chess,
+    //     fen: newGame.fen,
+    // });
 });
 
 /**
@@ -49,7 +63,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     //! the client will subscribe to the channel with this
     //! sessionCode.
 
-       console.log("[inside game.router.js] join game req object:", req.body);
+    console.log("[inside game.router.js] join game req object:", req.body);
 
     // console.log("[inside game.router.js] User join staged game:", req.user.id);
     const foundGame = findGameSessionToJoin(req.body.sessionCode, req.user.id);
@@ -74,7 +88,12 @@ router.post("/", rejectUnauthenticated, (req, res) => {
         foundGame.sessionCode,
     ])
         .then((dbRes) => {
-            res.status(201).send(dbRes.rows[0]);
+            // console.log("data from database:", dbRes.rows[0]);
+
+            // SET the Id for the game with the game object
+            foundGame.gameId = dbRes.rows[0].gameId;
+            // res.status(201).send(dbRes.rows[0]);
+            res.status(201).send({...dbRes.rows[0], fen: foundGame.fen});
         })
         .catch((error) => {
             console.log(
@@ -85,26 +104,55 @@ router.post("/", rejectUnauthenticated, (req, res) => {
         });
 });
 
-router.put("/", (req, res) => {
-  console.log("[inside game.router.js] add moves to game section");
-})
+//! this is the route that is hit when a player makes a move
+router.put("/", rejectUnauthenticated, (req, res) => {
+    console.log("[inside game.router.js] add moves to game section");
+    //get the move notation from the body obj
+    const move = req.body.move;
 
-router.delete("/:id", (req, res) => {
-  console.log("[inside game.router.js] delete game section; req.params.id:", req.params.id);
-  const queryText = `DELETE FROM "game" WHERE "id" = $1;`;
+    // get the req.body.gameId from the body
+    const gameId = req.body.gameId;
 
-  pool.query(queryText, [req.params.id])
-  .then((dbRes) => {
-    res.sendStatus(204);
-  })
-  .catch((error) => {
-    console.log(
-        "[inside game.router.js] error deleting the new game in database."
-    );
-    console.error(error);
-    res.sendStatus(500);
+    const moveData = makeAMove(gameId, move);
+    // get the history to send to the database
+    let moveHistory = getGameHistory(gameId);
+
+    console.log("moveHistory:", moveHistory);
+
+    const queryString = `UPDATE "game" SET "moves" = $2
+  WHERE "id" = $1;`;
+
+    //   pool.query(queryString, [gameId, moveHistory])
+    //   .then((dbRes) => {
+    //     // this sends an object with type and fen properties
+    //     res.sendStatus(201).send(moveData);
+    //   })
+    //   .catch((error) => {
+    //     console.log("[inside game.router.js] update moves section; error received in put route");
+    //     console.error(error);
+    //     res.sendStatus(500);
+    //   })
+    res.sendStatus(200);
 });
-  
-})
+
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+    console.log(
+        "[inside game.router.js] delete game section; req.params.id:",
+        req.params.id
+    );
+    const queryText = `DELETE FROM "game" WHERE "id" = $1;`;
+
+    pool.query(queryText, [req.params.id])
+        .then((dbRes) => {
+            res.sendStatus(204);
+        })
+        .catch((error) => {
+            console.log(
+                "[inside game.router.js] error deleting the new game in database."
+            );
+            console.error(error);
+            res.sendStatus(500);
+        });
+});
 
 module.exports = router;

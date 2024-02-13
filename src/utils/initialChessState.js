@@ -1,4 +1,4 @@
-
+import { translateFenNotationToUIGameBoard } from "./ChessUI";
 const rowNum = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const columnNum = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
@@ -30,4 +30,3 @@ const chessPieces = [
     ["♙","♙","♙","♙","♙","♙","♙","♙"], // 2
     ["♖","♘","♗","♔","♕","♗","♘","♖"]  // 1
 ];
-

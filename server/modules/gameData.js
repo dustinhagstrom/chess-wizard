@@ -1,3 +1,6 @@
+const { chessGenerator, undoLastMove, chessMoveHandler } = require("./chessFunctions");
+const { Chess } = require("chess.js");
+
 // this will hold games that are waiting to begin
 // will match games in this array to the random sessionCode
 // there is a lottery chance that there will be more than one
@@ -23,8 +26,11 @@ const generateRandomGameID = () => {
 const generateNewGame = (hostId) => {
     const gameCode = generateRandomGameID();
 
+    const newChess = chessGenerator();
+
     return {
-        sessionCode: gameCode, userIdWhite: hostId, hostId: hostId    
+        sessionCode: gameCode, userIdWhite: hostId, hostId: hostId, chess: newChess, fen: newChess.fen(), board: newChess._board   
+        // sessionCode: gameCode, userIdWhite: hostId, hostId: hostId, chess: newChess, fen: newChess.fen()   
     };
 
 };
@@ -51,4 +57,28 @@ const findGameSessionToJoin = (joinCode, joiningPlayerId) => {
   return foundGame;
 }
 
-module.exports = { gameStagingArea, gamesInProgress, generateNewGame, findGameSessionToJoin };
+const getGameHistory = (gameId) => {
+  // match the game to update with the game that has that id from the gamesInProgress
+  const foundGame = gamesInProgress.filter((game) => game.gameId === gameId)[0];
+
+  // call the history method on a Chess instance and return the moves
+  foundGame = foundGame.history();
+
+  // convert JS array to SQL array
+  let bufferString = `{`;
+  for (const element of foundGame) {
+      bufferString += element;
+  }
+  bufferString += `}`;
+
+  return bufferString;
+}
+
+const makeAMove = (gameId, moveNotation) => {
+
+  const foundGame = gamesInProgress.filter((game) => game.sessionCode == joinCode)[0];
+  
+  chessMoveHandler(foundGame, moveNotation);
+}
+
+module.exports = { gameStagingArea, gamesInProgress, generateNewGame, findGameSessionToJoin, getGameHistory, makeAMove };

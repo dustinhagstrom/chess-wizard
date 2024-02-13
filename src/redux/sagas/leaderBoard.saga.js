@@ -25,6 +25,7 @@ function* fetchPlayerStats(action) {
             : "SET_THIS_PLAYER";
 
             console.log("[inside fetchPlayerStats in leaderBoard.saga; isOpponent ?:]", action.payload.isOpponent);
+            console.log("[inside fetchPlayerStats in leaderBoard.saga] put call action type:", generatorActionType);
         const config = {
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
