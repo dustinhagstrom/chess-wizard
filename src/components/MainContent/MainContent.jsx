@@ -10,6 +10,7 @@ import FriendsList from "../FriendsList/FriendsList";
 import GameSession from "../GameSession/GameSession";
 // import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
 import { Redirect } from "react-router-dom";
+import { PusherProvider } from "../../hooks/PusherContext";
 
 function MainContent(props) {
     const user = useSelector((store) => store.user);
@@ -20,7 +21,10 @@ function MainContent(props) {
 
     const match = useRouteMatch();
 
-    console.log("[inside MainContent Component], component LOADED; sessionCode:", sessionCode);
+    console.log(
+        "[inside MainContent Component], component LOADED; sessionCode:",
+        sessionCode
+    );
 
     // console.log("match object:", match);
     // console.log("props of MainContent:", props);
@@ -29,19 +33,16 @@ function MainContent(props) {
         <div>
             <h2>{heading}</h2>
 
-            <ProtectedRoute exact path={match.url + "/newGame"}>
-            {!sessionCode ? <NewGameComponent /> : <Redirect to={match.url + "/chessBoard"} />}
+            <ProtectedRoute exact path={match.url + "/chessBoard"}>
+                {sessionCode ? (
+                    <PusherProvider>
+                        <GameSession />
+                    </PusherProvider>
+                ) : (
+                    <NewGameComponent />
+                )}
             </ProtectedRoute>
 
-            <ProtectedRoute exact path={match.url + "/chessBoard"}>
-                {/* if there isn't a game.sessionCode then redirect to '/newGame'*/}
-                {sessionCode ? <GameSession /> : <Redirect to={match.url + "/newGame"} />}
-                {/* {sessionCode ? <ChessBoard /> : <Redirect to={match.url + "/newGame"} />} */}
-                
-               {/* <UserInfoComponent userId={userIdBlack == user.id ? userIdWhite : userIdBlack}/>
-               <PersonalizedWelcomeMessage /> */}
-            </ProtectedRoute>
-               
             <ProtectedRoute exact path={match.url + "/friends"}>
                 <FriendsList />
                 <LeaderBoard />

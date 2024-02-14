@@ -34,15 +34,9 @@ function Nav() {
                             ⌂
                         </Link>
                         {/* //! If there is a game in state then go to "/chessBoard" */}
-                        {gameInProgress ? (
-                            <Link className="navLink" to="/user/chessBoard">
-                                ♛
-                            </Link>
-                        ) : (
-                            <Link className="navLink" to="/user/newGame">
-                                ♛
-                            </Link>
-                        )}
+                        <Link className="navLink" to="/user/chessBoard">
+                            ♛
+                        </Link>
                         <Link className="navLink" to="/user/friends">
                             👥
                         </Link>

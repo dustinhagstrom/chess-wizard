@@ -60,6 +60,8 @@ const whoseTurnIsIt = (chessGameInstance) => {
  */
 //! this function leverages the built-in error handling of the chess.js api
 const chessMoveHandler = (chessGameInstance, moveNotation) => {
+
+    console.log("[inside chessMoveHandler] chessFunctions.js, chessGameInstance:", chessGameInstance);
     try {
         //! the move method returns an exception or a move object
         const gameMoveObject = chessGameInstance.move(moveNotation);

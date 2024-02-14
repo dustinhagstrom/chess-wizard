@@ -59,12 +59,34 @@ function* abortGame(action) {
     }
 }
 
+function* movePiece(action) {
+    console.log("[inside movePiece generator function game.saga.js], action:", action);
+
+    try {
+        const config = {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+        };
+
+        yield axios.put(`/api/game/`, action.payload, config);
+
+        // Current data should be coming in from the pusher server trigger
+        
+
+    } catch (error) {
+        console.log("game host request failed");
+        console.error(error);
+    }
+}
+
 function* gameSaga() {
     yield takeLatest("HOST_GAME", hostGame);
 
     yield takeLatest("JOIN_GAME_SESSION", joinGame);
 
-    yield takeLatest("ABORT_GAME", abortGame)
+    yield takeLatest("ABORT_GAME", abortGame);
+
+    yield takeLatest("MOVE_PIECE", movePiece);
 }
 
 export default gameSaga;

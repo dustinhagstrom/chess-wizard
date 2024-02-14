@@ -12,6 +12,7 @@ const {
     getGameHistory,
     makeAMove,
 } = require("../modules/gameData");
+const { pusherUpdateBoard } = require("../modules/pusher");
 
 /**
  * This get will actually start the process of making a game instance
@@ -106,33 +107,43 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 
 //! this is the route that is hit when a player makes a move
 router.put("/", rejectUnauthenticated, (req, res) => {
-    console.log("[inside game.router.js] add moves to game section");
+    console.log("[inside game.router.js] add moves to game section, req.body:", req.body);
     //get the move notation from the body obj
     const move = req.body.move;
 
     // get the req.body.gameId from the body
     const gameId = req.body.gameId;
+    console.log("the game id:", gameId, "the move notation:", move);
 
     const moveData = makeAMove(gameId, move);
+
+    // set the FEN notation in local state
+    res.locals.fen = moveData.fen
+
+    console.log("[inside game.router.js] we made a move, moveData:", moveData);
     // get the history to send to the database
     let moveHistory = getGameHistory(gameId);
 
-    console.log("moveHistory:", moveHistory);
+    console.log("[inside game.router.js] we grabbed moveHistory:", moveHistory);
 
     const queryString = `UPDATE "game" SET "moves" = $2
   WHERE "id" = $1;`;
 
-    //   pool.query(queryString, [gameId, moveHistory])
-    //   .then((dbRes) => {
-    //     // this sends an object with type and fen properties
-    //     res.sendStatus(201).send(moveData);
-    //   })
-    //   .catch((error) => {
-    //     console.log("[inside game.router.js] update moves section; error received in put route");
-    //     console.error(error);
-    //     res.sendStatus(500);
-    //   })
-    res.sendStatus(200);
+      pool.query(queryString, [gameId, moveHistory])
+      .then((dbRes) => {
+        // this sends an object with type and fen properties
+        // res.sendStatus(201).send(moveData);
+        // can't send data with response
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        console.log("[inside game.router.js] update moves section; error received in put route");
+        console.error(error);
+        res.sendStatus(500);
+      })
+      .finally(() => {
+        pusherUpdateBoard(req, res)
+      })
 });
 
 router.delete("/:id", rejectUnauthenticated, (req, res) => {

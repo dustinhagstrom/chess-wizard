@@ -30,7 +30,7 @@ export function translateFenNotationToUIGameBoard(gameInFenNotation) {
         // increment the rowCounter at the end of row
         rowCounter++;
     }
-
+    console.log("[inside translateFenNotationToUIGameBoard] twoDGameBoard:", twoDGameBoard);
     return twoDGameBoard;
 }
 
@@ -81,6 +81,6 @@ export function mapLetterToChessPiece(letter) {
 // a column in a chess board
 export function generateTheCellLocationData(loopIncrement, rowNumber) {
     const asciiCodeForLowerA = 97;
-    
+
     return (String.fromCharCode(asciiCodeForLowerA + loopIncrement) + rowNumber);
 }

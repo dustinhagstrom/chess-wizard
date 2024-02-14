@@ -59,14 +59,14 @@ const findGameSessionToJoin = (joinCode, joiningPlayerId) => {
 
 const getGameHistory = (gameId) => {
   // match the game to update with the game that has that id from the gamesInProgress
-  const foundGame = gamesInProgress.filter((game) => game.gameId === gameId)[0];
+  const foundGame = gamesInProgress.filter((game) => game.gameId === gameId)[0].chess;
 
   // call the history method on a Chess instance and return the moves
-  foundGame = foundGame.history();
+  const history = foundGame.history();
 
   // convert JS array to SQL array
   let bufferString = `{`;
-  for (const element of foundGame) {
+  for (const element of history) {
       bufferString += element;
   }
   bufferString += `}`;
@@ -76,9 +76,18 @@ const getGameHistory = (gameId) => {
 
 const makeAMove = (gameId, moveNotation) => {
 
-  const foundGame = gamesInProgress.filter((game) => game.sessionCode == joinCode)[0];
+  console.log("[inside makeAMove gameData.js], gamesInProgress:", gamesInProgress);
+  console.log("[inside makeAMove gameData.js], gameId:", gameId);
+
+  const foundGame = gamesInProgress.filter((game) => game.gameId == gameId)[0].chess;
+  console.log("foundGame Object:", foundGame);
   
-  chessMoveHandler(foundGame, moveNotation);
+  return chessMoveHandler(foundGame, moveNotation);
 }
 
-module.exports = { gameStagingArea, gamesInProgress, generateNewGame, findGameSessionToJoin, getGameHistory, makeAMove };
+const findSessionCodeByGameId = (gameId) => {
+  return gamesInProgress.filter((game) => game.gameId === gameId)[0].sessionCode;
+
+}
+
+module.exports = { gameStagingArea, gamesInProgress, generateNewGame, findGameSessionToJoin, getGameHistory, makeAMove, findSessionCodeByGameId };
