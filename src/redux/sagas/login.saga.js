@@ -42,7 +42,7 @@ function* logoutUser(action) {
     yield put({ type: 'UNSET_USER' });
     yield put({ type: 'UNSET_OPPONENT_PLAYER' });
     yield put({ type: 'UNSET_THIS_PLAYER' });
-    yield put({ type: 'UNSET_GAME' });
+    yield put({ type: 'DELETE_GAME' });
     yield put({ type: 'UNSET_LEADERBOARD' });
   } catch (error) {
     console.log('Error with user logout:', error);

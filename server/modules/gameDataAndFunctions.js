@@ -1,4 +1,4 @@
-const { chessGenerator, undoLastMove, chessMoveHandler } = require("./chessFunctions");
+const { chessGenerator, undoLastMove, chessMoveHandler } = require("./chessAPIFunctions");
 const { Chess } = require("chess.js");
 
 // this will hold games that are waiting to begin
@@ -66,10 +66,17 @@ const getGameHistory = (gameId) => {
 
   // convert JS array to SQL array
   let bufferString = `{`;
-  for (const element of history) {
-      bufferString += element;
+  for (let i = 0; i < history.length; i++) {
+    bufferString += history[i];
+    if (i !== history.length - 1){
+      bufferString += ', '
+    }
   }
+
   bufferString += `}`;
+  // for (const element of history) {
+  //     bufferString += element;
+  // }
 
   return bufferString;
 }
@@ -86,8 +93,17 @@ const makeAMove = (gameId, moveNotation) => {
 }
 
 const findSessionCodeByGameId = (gameId) => {
-  return gamesInProgress.filter((game) => game.gameId === gameId)[0].sessionCode;
+  console.log("[inside findSessionCodeByGameId] gameId:", gameId);
+  return gamesInProgress.filter((game) => game.gameId == gameId)[0].sessionCode;
 
 }
 
-module.exports = { gameStagingArea, gamesInProgress, generateNewGame, findGameSessionToJoin, getGameHistory, makeAMove, findSessionCodeByGameId };
+const deleteGameInProgress = (gameId) => {
+  let foundGame = gamesInProgress.filter((game) => game.gameId == gameId)[0];
+
+    // remove this game from gamesInProgress
+    let deletionIndex = gamesInProgress.indexOf(foundGame);
+    gamesInProgress.splice(deletionIndex, 1);
+}
+
+module.exports = { gameStagingArea, gamesInProgress, generateNewGame, findGameSessionToJoin, getGameHistory, makeAMove, findSessionCodeByGameId, deleteGameInProgress };

@@ -7,7 +7,7 @@ import ChessBoardSpace from "../ChessBoardSpace/ChessBoardSpace";
 import {
     translateFenNotationToUIGameBoard,
     generateTheCellLocationData,
-} from "../../utils/ChessUI";
+} from "../../utils/ChessUIFunctions";
 
 import "./ChessBoard.css";
 function ChessBoard({gameId}) {

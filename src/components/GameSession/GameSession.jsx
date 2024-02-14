@@ -28,6 +28,11 @@ function GameSession(props) {
             dispatch({ type: "PLAYER_JOIN", payload: data });
         });
 
+        channel.bind("DELETE_GAME", (data) => {
+            console.log("heard the 'DELETE_GAME' trigger on the frontend");
+            dispatch({ type: "DELETE_GAME" });
+        });
+
         return () => {
             channel.unbind(
                 "BOARD_UPDATE",
@@ -42,6 +47,15 @@ function GameSession(props) {
                     dispatch({ type: "PLAYER_JOIN", payload: {} });
                 } /* dispatch or call function here */
             );
+
+            channel.unbind(
+                "DELETE_GAME",
+                () => {
+                    dispatch({ type: "DELETE_GAME" });
+                } /* dispatch or call function here */
+            );
+
+
         };
     }, []);
 

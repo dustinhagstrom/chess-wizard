@@ -2,7 +2,7 @@ const gameReducer = (state = {}, action) => {
     switch (action.type) {
         case "SET_GAME":
             return action.payload;
-        case "UNSET_GAME":
+        case "DELETE_GAME":
             return {};
         case "PLAYER_JOIN":
             return {
@@ -14,7 +14,7 @@ const gameReducer = (state = {}, action) => {
             return {
                 ...state,
                 fen: action.payload.fen,
-                type: action.payload.type,
+                // type: action.payload.type,
             };
         default:
             return state;

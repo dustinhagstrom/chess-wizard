@@ -11,8 +11,14 @@ const {
     findGameSessionToJoin,
     getGameHistory,
     makeAMove,
-} = require("../modules/gameData");
-const { pusherUpdateBoard, pusherUpdateGameInfo } = require("../modules/pusher");
+    deleteGameInProgress,
+    findSessionCodeByGameId,
+} = require("../modules/gameDataAndFunctions");
+const {
+    pusherUpdateBoard,
+    pusherUpdateGameInfo,
+    pusherDeleteGame,
+} = require("../modules/pusher");
 
 /**
  * This get will actually start the process of making a game instance
@@ -138,9 +144,7 @@ router.put("/", rejectUnauthenticated, (req, res) => {
 
     pool.query(queryString, [gameId, moveHistory])
         .then((dbRes) => {
-            // this sends an object with type and fen properties
-            // res.sendStatus(201).send(moveData);
-            // can't send data with response
+            res.locals.sessionCode = findSessionCodeByGameId(gameId);
             res.sendStatus(201);
         })
         .catch((error) => {
@@ -164,6 +168,10 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
 
     pool.query(queryText, [req.params.id])
         .then((dbRes) => {
+            // grab the sessionCode for the pusher channel
+            res.locals.sessionCode = findSessionCodeByGameId(req.params.id);
+            // remove the game from the gamesInProgress array in gameData.js
+            deleteGameInProgress(req.params.id);
             res.sendStatus(204);
         })
         .catch((error) => {
@@ -172,6 +180,9 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
             );
             console.error(error);
             res.sendStatus(500);
+        })
+        .finally(() => {
+            pusherDeleteGame(req, res);
         });
 });
 

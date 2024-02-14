@@ -1,55 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { mapLetterToChessPiece } from '../../utils/ChessUI';
+import { mapLetterToChessPiece } from "../../utils/ChessUIFunctions";
 
-function ChessBoardSpace({columnIndex, rowOffset, cellContents, stylingClassName, setPieceToMove, pieceToMove, cellCoord}) {
-  const [piece, setPiece] = useState('');
+function ChessBoardSpace({
+    columnIndex,
+    rowOffset,
+    cellContents,
+    stylingClassName,
+    setPieceToMove,
+    pieceToMove,
+    cellCoord,
+}) {
+    const [piece, setPiece] = useState("");
 
-  const gameId = useSelector((store) => store.game.gameId);
+    const gameId = useSelector((store) => store.game.gameId);
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const handlesClick = () => {
-    console.log(`you clicked on square ${cellCoord}, cellContents: ${cellContents}`);
-    console.log("cell coordinate data passed in:", cellCoord);
-    console.log("move notation after on click of game square:", pieceToMove);
-    // if there is already notation stored, then add target square data
-    if (pieceToMove) {
-      let moveNotation = pieceToMove + `-${cellCoord}`;
+    const handlesClick = () => {
+        console.log(
+            `you clicked on square ${cellCoord}, cellContents: ${cellContents}`
+        );
+        console.log("cell coordinate data passed in:", cellCoord);
+        console.log(
+            "move notation after on click of game square:",
+            pieceToMove
+        );
+        // if there is a target piece, then add target square data
+        if (pieceToMove) {
+            let moveNotation = pieceToMove + `-${cellCoord}`;
 
-      console.log("[inside handlesClick in ChessBoardSpace ]dispatch with gameId:", gameId);
-      
-      dispatch({
-        type: "MOVE_PIECE",
-        payload: {move: moveNotation, gameId: gameId}
-      })
+            // console.log("[inside handlesClick in ChessBoardSpace ]dispatch with gameId:", gameId);
 
-      setPieceToMove("");
-      return;
-    }
-    // if there is not moveNotation and there is a piece in this cell
-    // then set the move notation to be the letter representing the piece
-    // and append the cell coordinates
-    if (cellContents) {
-      setPieceToMove(cellContents + cellCoord)
-      console.log("there is content in this cell!");
-      return;
-    }
-  }
+            // reset state in parent
+            setPieceToMove("");
 
+            dispatch({
+                type: "MOVE_PIECE",
+                payload: { move: moveNotation, gameId: gameId },
+            });
+        }
 
+        // if there is a piece on target space
+        if (cellContents) {
+            setPieceToMove(cellContents + cellCoord);
+            // console.log("there is content in this cell!");
+        }
+    };
 
-  useEffect(() => {
-    setPiece(mapLetterToChessPiece(cellContents));
-  }, [cellContents])
+    useEffect(() => {
+        setPiece(mapLetterToChessPiece(cellContents));
+    }, [cellContents]);
 
-  return (
-    <div className={stylingClassName} onClick={handlesClick}>
-      {piece}
-      {/* {(columnIndex+1) + "-" + (8-rowOffset)} */}
-    </div>
-  );
+    return (
+        <div className={stylingClassName} onClick={handlesClick}>
+            {piece}
+        </div>
+    );
 }
 
 export default ChessBoardSpace;

@@ -1,5 +1,5 @@
 const Pusher = require("pusher");
-const { findSessionCodeByGameId } = require("./gameData");
+const { findSessionCodeByGameId } = require("./gameDataAndFunctions");
 
 const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID,
@@ -12,7 +12,7 @@ const pusher = new Pusher({
 const pusherUpdateBoard = async (req, res) => {
     try {
         // send fen data through web socket on channel req.body.gameId
-        pusher.trigger(findSessionCodeByGameId(req.body.gameId), "BOARD_UPDATE", {
+        pusher.trigger(res.locals.sessionCode, "BOARD_UPDATE", {
             type: "BOARD_UPDATE",
             fen: res.locals.fen,
         });
@@ -24,7 +24,7 @@ const pusherUpdateBoard = async (req, res) => {
 
 const pusherUpdateGameInfo = async (req, res) => {
     try {
-        // send fen data through web socket on channel req.body.gameId
+        // send fen data through web socket on channel req.body.sessionCode
         pusher.trigger(req.body.sessionCode, "PLAYER_JOIN", {
             type: "PLAYER_JOIN",
             gameId: res.locals.gameId,
@@ -36,7 +36,21 @@ const pusherUpdateGameInfo = async (req, res) => {
     }
 };
 
+const pusherDeleteGame = async (req, res) => {
+    try {
+        // send fen data through web socket on channel req.body.gameId
+        pusher.trigger(res.locals.sessionCode, "DELETE_GAME", {
+            type: "DELETE_GAME",
+            // gameId: req.params.id,
+        });
+    } catch (error) {
+        console.log("error with pusherDeleteGame trigger function on the web socket");
+        console.error(error);
+    }
+};
+
 module.exports = {
     pusherUpdateBoard,
-    pusherUpdateGameInfo
+    pusherUpdateGameInfo,
+    pusherDeleteGame
 };
