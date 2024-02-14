@@ -13,30 +13,20 @@ import { Redirect } from "react-router-dom";
 import { PusherProvider } from "../../hooks/PusherContext";
 
 function MainContent(props) {
-    const user = useSelector((store) => store.user);
-
-    // const opponent = useSelector((store) => store.opponent);
     const sessionCode = useSelector((store) => store.game.sessionCode);
-    const [heading, setHeading] = useState("MainContent Component");
-
     const match = useRouteMatch();
 
-    console.log(
-        "[inside MainContent Component], component LOADED; sessionCode:",
-        sessionCode
-    );
-
-    // console.log("match object:", match);
-    // console.log("props of MainContent:", props);
+    // console.log(
+    //     "[inside MainContent Component], component LOADED; sessionCode:",
+    //     sessionCode
+    // );
 
     return (
         <div>
-            <h2>{heading}</h2>
-
             <ProtectedRoute exact path={match.url + "/chessBoard"}>
                 {sessionCode ? (
                     <PusherProvider>
-                        <GameSession />
+                        <GameSession sessionCode={sessionCode}/>
                     </PusherProvider>
                 ) : (
                     <NewGameComponent />

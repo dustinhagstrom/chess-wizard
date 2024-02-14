@@ -12,7 +12,7 @@ const {
     getGameHistory,
     makeAMove,
 } = require("../modules/gameData");
-const { pusherUpdateBoard } = require("../modules/pusher");
+const { pusherUpdateBoard, pusherUpdateGameInfo } = require("../modules/pusher");
 
 /**
  * This get will actually start the process of making a game instance
@@ -91,10 +91,11 @@ router.post("/", rejectUnauthenticated, (req, res) => {
         .then((dbRes) => {
             // console.log("data from database:", dbRes.rows[0]);
 
-            // SET the Id for the game with the game object
+            // SET the Id for the game with the game object and put in local obj
             foundGame.gameId = dbRes.rows[0].gameId;
+            res.locals.gameId = dbRes.rows[0].gameId;
             // res.status(201).send(dbRes.rows[0]);
-            res.status(201).send({...dbRes.rows[0], fen: foundGame.fen});
+            res.status(201).send({ ...dbRes.rows[0], fen: foundGame.fen });
         })
         .catch((error) => {
             console.log(
@@ -102,12 +103,18 @@ router.post("/", rejectUnauthenticated, (req, res) => {
             );
             console.error(error);
             res.sendStatus(500);
+        })
+        .finally(() => {
+            pusherUpdateGameInfo(req, res);
         });
 });
 
 //! this is the route that is hit when a player makes a move
 router.put("/", rejectUnauthenticated, (req, res) => {
-    console.log("[inside game.router.js] add moves to game section, req.body:", req.body);
+    console.log(
+        "[inside game.router.js] add moves to game section, req.body:",
+        req.body
+    );
     //get the move notation from the body obj
     const move = req.body.move;
 
@@ -118,7 +125,7 @@ router.put("/", rejectUnauthenticated, (req, res) => {
     const moveData = makeAMove(gameId, move);
 
     // set the FEN notation in local state
-    res.locals.fen = moveData.fen
+    res.locals.fen = moveData.fen;
 
     console.log("[inside game.router.js] we made a move, moveData:", moveData);
     // get the history to send to the database
@@ -129,21 +136,23 @@ router.put("/", rejectUnauthenticated, (req, res) => {
     const queryString = `UPDATE "game" SET "moves" = $2
   WHERE "id" = $1;`;
 
-      pool.query(queryString, [gameId, moveHistory])
-      .then((dbRes) => {
-        // this sends an object with type and fen properties
-        // res.sendStatus(201).send(moveData);
-        // can't send data with response
-        res.sendStatus(201);
-      })
-      .catch((error) => {
-        console.log("[inside game.router.js] update moves section; error received in put route");
-        console.error(error);
-        res.sendStatus(500);
-      })
-      .finally(() => {
-        pusherUpdateBoard(req, res)
-      })
+    pool.query(queryString, [gameId, moveHistory])
+        .then((dbRes) => {
+            // this sends an object with type and fen properties
+            // res.sendStatus(201).send(moveData);
+            // can't send data with response
+            res.sendStatus(201);
+        })
+        .catch((error) => {
+            console.log(
+                "[inside game.router.js] update moves section; error received in put route"
+            );
+            console.error(error);
+            res.sendStatus(500);
+        })
+        .finally(() => {
+            pusherUpdateBoard(req, res);
+        });
 });
 
 router.delete("/:id", rejectUnauthenticated, (req, res) => {

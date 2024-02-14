@@ -3,13 +3,11 @@ export function translateFenNotationToUIGameBoard(gameInFenNotation) {
     //ascii 1-8: 49-56
     //ascii a-h: 97-104
     let twoDGameBoard = [[], [], [], [], [], [], [], []];
-    // console.log("init twoDGameBoard:", twoDGameBoard);
     let rowCounter = 0; // we start at the last game board row (located at index zero in this representation)
     let charPosition = 0; // index-based counting
     // loop through gameBoard
     for (const row of gameBoard) {
         for (const piece of row) {
-            // console.log("piece in the row:", piece, "charcode:");
             if (row.charCodeAt(charPosition) > 56) {
                 // it is an actual ascii letter char
                 // push the letter for that piece to 2D game board

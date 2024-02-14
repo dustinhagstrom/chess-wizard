@@ -10,7 +10,7 @@ function GameSession(props) {
     const pusher = usePusher();
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
-    const { userIdWhite, userIdBlack, sessionCode } = useSelector(
+    const { userIdWhite, userIdBlack, sessionCode, gameId } = useSelector(
         (store) => store.game
     );
     const [heading, setHeading] = useState("GameSession Component");
@@ -23,11 +23,23 @@ function GameSession(props) {
             dispatch({ type: "BOARD_UPDATE", payload: data });
         });
 
+        channel.bind("PLAYER_JOIN", (data) => {
+            console.log("heard the 'PLAYER_JOIN' trigger on the frontend, data:", data);
+            dispatch({ type: "PLAYER_JOIN", payload: data });
+        });
+
         return () => {
             channel.unbind(
                 "BOARD_UPDATE",
                 () => {
                     dispatch({ type: "BOARD_UPDATE", payload: {} });
+                } /* dispatch or call function here */
+            );
+
+            channel.unbind(
+                "PLAYER_JOIN",
+                () => {
+                    dispatch({ type: "PLAYER_JOIN", payload: {} });
                 } /* dispatch or call function here */
             );
         };
@@ -36,7 +48,7 @@ function GameSession(props) {
     return (
         <div>
             <h2>{heading}</h2>
-            <ChessBoard />
+            <ChessBoard gameId={gameId}/>
 
             {userIdWhite && userIdBlack ? (
                 <UserInfoComponent

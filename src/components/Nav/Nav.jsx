@@ -6,11 +6,6 @@ import { useSelector } from "react-redux";
 
 function Nav() {
     const user = useSelector((store) => store.user);
-    const game = useSelector((store) => store.game);
-
-    const gameInProgress = game?.sessionCode ? true : false;
-    // console.log("[inside Nav] gameInProgress:", gameInProgress);
-    // console.log("[inside Nav] game from reducer:", game);
 
     return (
         <div className="nav">
@@ -27,13 +22,11 @@ function Nav() {
                     </Link>
                 )}
 
-                {/* If a user is logged in and there is a game in progress, show these links */}
                 {user.id && (
                     <>
                         <Link className="navLink" to="/user">
                             ⌂
                         </Link>
-                        {/* //! If there is a game in state then go to "/chessBoard" */}
                         <Link className="navLink" to="/user/chessBoard">
                             ♛
                         </Link>

@@ -4,34 +4,34 @@ import { Button } from "@mui/material";
 
 import ChessBoardSpace from "../ChessBoardSpace/ChessBoardSpace";
 
-import { translateFenNotationToUIGameBoard, generateTheCellLocationData } from "../../utils/ChessUI";
+import {
+    translateFenNotationToUIGameBoard,
+    generateTheCellLocationData,
+} from "../../utils/ChessUI";
 
 import "./ChessBoard.css";
-function ChessBoard(props) {
-    const [heading, setHeading] = useState("ChessBoard Component");
+function ChessBoard({gameId}) {
     const [board, setBoard] = useState([]);
     const [pieceToMove, setPieceToMove] = useState("");
 
     const gameFen = useSelector((store) => store.game.fen);
     console.log("[inside ChessBoard component] gameFen:", gameFen);
-    // const game = useSelector((store) => store.game);
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // const abortGame = () => {
-    //     // without a web socket, this will not work for the host of the game session
-    //     dispatch({
-    //         type: "ABORT_GAME",
-    //         payload: game.gameId,
-    //     });
-    // };
+    const abortGame = () => {
+        // without a web socket, this will not work for the host of the game session
+        dispatch({
+            type: "ABORT_GAME",
+            payload: gameId,
+        });
+    };
 
-
-    // console.log("chess board data:", game.fen);
-
+    // run the board setup function asap
     useEffect(() => {
-      setBoard(translateFenNotationToUIGameBoard(gameFen));
-    }, [gameFen])
+        setBoard(translateFenNotationToUIGameBoard(gameFen));
+    }, [gameFen]);
+
     return (
         <div className="game-board-container">
             <div className="row-counter">
@@ -49,17 +49,22 @@ function ChessBoard(props) {
                     return row.map((cell, columnIndex) => {
                         return (
                             <ChessBoardSpace
-                            setPieceToMove={setPieceToMove}
+                                setPieceToMove={setPieceToMove}
                                 cellCoord={generateTheCellLocationData(
-                                  columnIndex,
+                                    columnIndex,
                                     8 - rowOffset
                                 )}
-                                key={generateTheCellLocationData(columnIndex, 8 - rowOffset)}
+                                key={generateTheCellLocationData(
+                                    columnIndex,
+                                    8 - rowOffset
+                                )}
                                 cellContents={cell}
                                 columnIndex={columnIndex}
                                 rowOffset={rowOffset}
                                 stylingClassName={
-                                    (columnIndex + 1 + rowOffset) % 2 === 0 ? "light" : "dark"
+                                    (columnIndex + 1 + rowOffset) % 2 === 0
+                                        ? "light"
+                                        : "dark"
                                 }
                                 pieceToMove={pieceToMove}
                             />
@@ -77,7 +82,7 @@ function ChessBoard(props) {
                 <div>g</div>
                 <div>h</div>
             </div>
-            {/* <Button onClick={abortGame}>KILL SWITCH</Button> */}
+            <Button onClick={abortGame}>KILL SWITCH</Button>
         </div>
     );
 }
