@@ -12,15 +12,16 @@ import {
 import "./ChessBoard.css";
 function ChessBoard({gameId}) {
     const [board, setBoard] = useState([]);
+    const [turn, setTurn] = useState("");
     const [pieceToMove, setPieceToMove] = useState("");
+    const [playerColor, setPlayerColor] = useState("");
 
     const gameFen = useSelector((store) => store.game.fen);
-    console.log("[inside ChessBoard component] gameFen:", gameFen);
+    console.log("[inside ChessBoard component] gameFen:", gameFen, "turn:", turn === "b" ? "Black" : "White");
 
     const dispatch = useDispatch();
 
     const abortGame = () => {
-        // without a web socket, this will not work for the host of the game session
         dispatch({
             type: "ABORT_GAME",
             payload: gameId,
@@ -29,7 +30,9 @@ function ChessBoard({gameId}) {
 
     // run the board setup function asap
     useEffect(() => {
-        setBoard(translateFenNotationToUIGameBoard(gameFen));
+        let [boardData, turnData] = translateFenNotationToUIGameBoard(gameFen);
+        setBoard(boardData);
+        setTurn(turnData);
     }, [gameFen]);
 
     return (

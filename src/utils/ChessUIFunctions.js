@@ -1,5 +1,6 @@
 export function translateFenNotationToUIGameBoard(gameInFenNotation) {
     const gameBoard = gameInFenNotation.split(" ")[0].split("/");
+    const whoseTurn = gameInFenNotation.split(" ")[1];
     //ascii 1-8: 49-56
     //ascii a-h: 97-104
     let twoDGameBoard = [[], [], [], [], [], [], [], []];
@@ -29,7 +30,7 @@ export function translateFenNotationToUIGameBoard(gameInFenNotation) {
         rowCounter++;
     }
     console.log("[inside translateFenNotationToUIGameBoard] twoDGameBoard:", twoDGameBoard);
-    return twoDGameBoard;
+    return [twoDGameBoard, whoseTurn];
 }
 
 export function mapLetterToChessPiece(letter) {

@@ -128,12 +128,10 @@ router.put("/", rejectUnauthenticated, (req, res) => {
     const gameId = req.body.gameId;
     console.log("the game id:", gameId, "the move notation:", move);
 
-    const moveData = makeAMove(gameId, move);
-
-    // set the FEN notation in local state
-    res.locals.fen = moveData.fen;
-
-    console.log("[inside game.router.js] we made a move, moveData:", moveData);
+    // set the move data obj in local state
+    res.locals.moveData = makeAMove(gameId, move);
+    
+    console.log("[inside game.router.js] we made a move, moveData:", res.locals.moveData);
     // get the history to send to the database
     let moveHistory = getGameHistory(gameId);
 

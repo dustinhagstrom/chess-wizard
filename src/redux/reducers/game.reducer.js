@@ -14,7 +14,7 @@ const gameReducer = (state = {}, action) => {
             return {
                 ...state,
                 fen: action.payload.fen,
-                // type: action.payload.type,
+                statusSignal: action.payload.type,
             };
         default:
             return state;

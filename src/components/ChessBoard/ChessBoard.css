@@ -28,6 +28,10 @@
     height: 80px;
   }
   
+  .chessboard div:hover {
+    outline: solid black 3px;
+  }
+  
   .light {
     background-color: #769656;
   }

@@ -42,11 +42,6 @@ const undoLastMove = (chessGameInstance) => {
     return chessGameInstance.undo();
 };
 
-const whoseTurnIsIt = (chessGameInstance) => {
-    // returns a 'b' for black and a 'w' for white
-    return chessGameInstance.turn();
-};
-
 /**
  *
  * @param {Chess} chessGameInstance
@@ -91,5 +86,4 @@ module.exports = {
     chessMoveHandler,
     undoLastMove,
     chessGenerator,
-    whoseTurnIsIt,
 };
