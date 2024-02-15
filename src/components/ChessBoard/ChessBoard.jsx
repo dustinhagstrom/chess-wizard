@@ -37,21 +37,18 @@ function ChessBoard({gameId}) {
 
     return (
         <div className="game-board-container">
-            <div className="row-counter">
-                <div>8</div>
-                <div>7</div>
-                <div>6</div>
-                <div>5</div>
-                <div>4</div>
-                <div>3</div>
-                <div>2</div>
-                <div>1</div>
+          <div style={{ display: 'flex', flexDirection: 'row'}}>
+            <div className="number-div">
+              {  [ 1, 2, 3, 4 ,5 ,6, 7, 8 ].reverse().map( label => (
+                  <div className='vertical-label'>{ label }</div>
+              ))}
             </div>
             <div className="chessboard">
                 {board.map((row, rowOffset) => {
                     return row.map((cell, columnIndex) => {
                         return (
                             <ChessBoardSpace
+                                className='chess-board-div'
                                 setPieceToMove={setPieceToMove}
                                 cellCoord={generateTheCellLocationData(
                                     columnIndex,
@@ -75,17 +72,13 @@ function ChessBoard({gameId}) {
                     });
                 })}
             </div>
-            <div className="column-counter">
-                <div>a</div>
-                <div>b</div>
-                <div>c</div>
-                <div>d</div>
-                <div>e</div>
-                <div>f</div>
-                <div>g</div>
-                <div>h</div>
-            </div>
-            <Button onClick={abortGame}>KILL SWITCH</Button>
+          </div>
+          <div className="letter-div">
+            { [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' ].map( label => (
+                <div className='vertical-label'>{ label }</div> 
+            ))}
+          </div>
+          <Button onClick={abortGame}>KILL SWITCH</Button>
         </div>
     );
 }

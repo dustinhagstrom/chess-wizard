@@ -1,15 +1,24 @@
 .game-board-container {
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     align-items: center;
     font-size: 3em;
-    text-align: center;  
+
+    .vertical-label {
+      display: flex;
+      width: 80px;
+      height: 80px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .letter-div {
+      display: flex;
+      flex-direction: row;
+      margin-left: 80px;
+    }
 }
 
-.row-counter, .column-container {
-    display: flex;
-    justify-content: center;
-}
 
 .row-counter {
     flex-direction: column;
@@ -19,17 +28,22 @@
 .chessboard {
     display: flex;
     flex-wrap: wrap;
-    width: 640px; /* 8 squares * 80px each */
-    margin: 10px 0;
+    max-width: 640px;  /* 8 squares * 80px each */
+    min-width: 640px;
   }
   
   .chessboard div {
     width: 80px;
     height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .chessboard div:hover {
-    outline: solid black 3px;
+    border: solid black 3px;
+    width: 74px;
+    height: 74px;
   }
   
   .light {

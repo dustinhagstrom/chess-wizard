@@ -5,7 +5,7 @@ import PersonalizedWelcomeMessage from "../PersonalizedWelcomeMessage/Personaliz
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import NewGameComponent from "../NewGameComponent/NewGameComponent";
 import LeaderBoard from "../LeaderBoard/LeaderBoard";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useLocation } from "react-router-dom";
 import FriendsList from "../FriendsList/FriendsList";
 import GameSession from "../GameSession/GameSession";
 // import UserInfoComponent from "../UserInfoComponent/UserInfoComponent";
@@ -16,13 +16,13 @@ function MainContent(props) {
     const sessionCode = useSelector((store) => store.game.sessionCode);
     const match = useRouteMatch();
 
-    // console.log(
+        // console.log(
     //     "[inside MainContent Component], component LOADED; sessionCode:",
     //     sessionCode
     // );
 
     return (
-        <div>
+        <>
             <ProtectedRoute exact path={match.url + "/chessBoard"}>
                 {sessionCode ? (
                     <PusherProvider>
@@ -32,15 +32,16 @@ function MainContent(props) {
                     <NewGameComponent />
                 )}
             </ProtectedRoute>
-
+        
             <ProtectedRoute exact path={match.url + "/friends"}>
                 <FriendsList />
                 <LeaderBoard />
             </ProtectedRoute>
             <ProtectedRoute exact path={match.url + "/"}>
                 <PersonalizedWelcomeMessage />
+                <LeaderBoard />
             </ProtectedRoute>
-        </div>
+        </>
     );
 }
 

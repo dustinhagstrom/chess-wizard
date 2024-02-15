@@ -10,8 +10,11 @@ function UserPage() {
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
 
-      <UserInfoComponent userId={user.id}/>
-      <MainContent />
+      <div style={{ display: 'flex', flexDirection:'row', justifyContent: 'space-between' }}>
+        <UserInfoComponent userId={user.id} style={{ width: '20%' }}/>
+        <MainContent style={{ display: 'flex', flexDirection:'row', width: '70%' }}/>
+
+      </div>
     </div>
   );
 }
